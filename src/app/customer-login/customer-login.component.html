@@ -1,0 +1,34 @@
+<h2>Customer Login</h2>
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <table align="center">
+        <tr>
+            <th>
+                E-mail:
+            </th>
+            <td>
+                <input type="email" id="email" name="email" class="form-control" required  [(ngModel)]="loginModel.email"  >    
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Password:
+            </th>
+            <td>
+                <input type="password" id= "password" name= "password" class="form-control" required  [(ngModel)]="loginModel.password"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Login</button>
+            </td>
+            <td>
+                <button routerLink="/customerSignup" routerLinkActive="active">Sign Up</button>
+            </td>
+        </tr>
+    
+    </table>
+</form>
+
+
+
+

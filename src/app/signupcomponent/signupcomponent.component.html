@@ -1,0 +1,84 @@
+<h2>Sign up</h2>
+<form (ngSubmit)="saveUserDetails()" #carwashform="ngForm">
+    <table align="center">
+        <tr>
+            <th>
+                User:
+            </th>
+            <td>
+                <select style="padding: 0px 91px 0px 0px;" id="cars" [(ngModel)]="model.userType">
+					  <option value="Customer" selected>Customer</option>
+					  <option value="Washer">Washer</option>
+				</select>   
+            </td>
+
+            <th>
+                Contact No.:
+            </th>
+            <td>
+                <input type="text" id="contactno" name="contactno" class="form-control" required  [(ngModel)]="model.phNum"  >    
+            </td>
+          
+            <th>
+                Password:
+            </th>
+            <td>
+                <input type="password" id= "password" name= "password" class="form-control" required/>
+            </td>
+        </tr>
+		<tr>
+            <th>
+                Name:
+            </th>
+            <td>
+                <input type="text" id="name" name="name" class="form-control" required  [(ngModel)]="model.name"  >    
+            </td>
+
+            <th>
+                Address:
+            </th>
+            <td>
+                <input type="text" id="address" name="address" class="form-control" required  [(ngModel)]="model.address"  >    
+            </td>
+
+            <th>
+                Confirm password:
+            </th>
+            <td>
+                <input type="password" id= "password" name= "password" class="form-control" required  [(ngModel)]="model.password"/>
+            </td>
+        </tr>
+		<tr>
+          
+        </tr>
+        <tr>
+            <th>
+                E-mail:
+            </th>
+            <td>
+                <input type="email" id="email" name="email" class="form-control" required  [(ngModel)]="model.emailId"  >    
+            </td>
+        </tr>
+		<tr>
+           
+        </tr>
+        <tr>
+            
+        </tr>
+		<tr>
+            
+        </tr>
+        <tr>
+			<td></td>
+            <td>
+                <button type="submit" class="btn btn-success" [disabled]="!carwashform.form.valid">Sign up</button>
+            </td>
+        </tr>
+    
+    </table>
+</form>
+
+
+
+
+
