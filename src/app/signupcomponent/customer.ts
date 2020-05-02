@@ -5,6 +5,5 @@ export class Customer {
     emailId: String;
     phNum: String;
     address: String;
-    userType: String;
-	
+    userType: String = '';
 }

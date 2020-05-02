@@ -7,20 +7,35 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { from } from 'rxjs';
 import { SignupcomponentComponent } from './signupcomponent/signupcomponent.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { IntroductionComponent } from './introduction/introduction.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CarwashservicesService } from './carwashservices.service';
+import { CustomerdetailsComponent } from './customerdetails/customerdetails.component';
+import { WasherdetailsComponent } from './washerdetails/washerdetails.component';
+import { WashrequestComponent } from './washrequest/washrequest.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomerLoginComponent,
     PaymentDetailsComponent,
-    SignupcomponentComponent
+    SignupcomponentComponent,
+    IntroductionComponent,
+    CustomerdetailsComponent,
+    WasherdetailsComponent,
+    WashrequestComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [CarwashservicesService],
   bootstrap: [AppComponent]
 
 
