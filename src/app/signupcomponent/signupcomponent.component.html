@@ -1,38 +1,39 @@
 <div class="row pleaseRegister" >
     Please Register!!
 </div>
+<span style="color: red;">{{errorMsg}}</span>
 <form (ngSubmit)="saveUserDetails(carwashform)" #carwashform="ngForm">
     <div class="form-group">
         <select id="userType" name="userType" [(ngModel)]="model.userType" class="form-control">
-            <option value="" disabled selected>Select User Type</option>
+            <option value="" disabled selected>User Type</option>
             <option value="Customer">Customer</option>
             <option value="Washer">Washer</option>            
         </select> 
-    </div>    
-    <div class="form-group">
-        <input type="text" id="name" name="name" class="form-control" required  [(ngModel)]="model.name" placeholder="Please enter name">
-    </div>         
-    <div class="form-group">
-        <input type="password" id= "password" name= "password" required class="form-control" [(ngModel)]="model.password" placeholder="Please enter password"/>
     </div>
     <div class="form-group">
-        <input type="password" id= "password" name= "password" class="form-control" required placeholder="Please enter password"/>   
+        <input type="text" id="name" name="name" class="form-control"   [(ngModel)]="model.name" placeholder="Name">
+    </div> 
+    <div class="form-group">
+        <input type="password" id= "password" name= "password" class="form-control" [(ngModel)]="model.password" placeholder="Password"/>
+    </div>
+    <div class="form-group">
+        <input type="password" id= "confirmpassword" name= "confirmpassword" class="form-control" placeholder="Confirm password" [(ngModel)]="confirmPassword"/>   
     </div>  
     <div class="form-group">
-        <input type="text" id="contactno" name="contactno" required  [(ngModel)]="model.phNum" class="form-control" placeholder="Please enter contact number">
+        <input type="text" id="contactno" name="contactno"  [(ngModel)]="model.phNum" class="form-control" placeholder="Mobile number">
     </div>  
     <div class="form-group">
-        <textarea rows="3" id="address" name="address" class="form-control" required  [(ngModel)]="model.address" placeholder="Please enter address"></textarea> 
+        <textarea rows="3" id="address" name="address" class="form-control" [(ngModel)]="model.address" placeholder="Address"></textarea> 
     </div>  
     <div class="form-group">
-        <input type="email" id="email" name="email" class="form-control" required  [(ngModel)]="model.emailId" placeholder="Please enter Email-id">
+        <input type="email" id="email" name="email" class="form-control" [(ngModel)]="model.emailId" placeholder="Email-id" >
     </div>     
     <div class="row">
         <div class="col-sm-4 fieldLabel">
            
-        </div>
+        </div> 
         <div class="col-sm-8">
-            <button type="submit" class="btn btn-success signupbtn" [disabled]="!carwashform.form.valid">Sign up</button>
+            <button class="btn btn-success signupbtn">Sign up</button>
         </div>
     </div>  
             

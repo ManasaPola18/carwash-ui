@@ -22,3 +22,8 @@
 .signupbtn {
     margin-bottom: 23px;
 }
+
+.value-req ,.value-invalid {
+    color: red;
+    font-weight: bold;
+}

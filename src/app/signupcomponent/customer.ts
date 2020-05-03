@@ -1,9 +1,9 @@
 export class Customer {
 
-    name: String;
-    password: String;
-    emailId: String;
-    phNum: String;
-    address: String;
-    userType: String = '';
+    name: string;
+    password: string;
+    emailId: string;
+    phNum: string;
+    address: string;
+    userType: string = '';
 }

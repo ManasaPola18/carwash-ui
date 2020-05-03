@@ -1,22 +1,21 @@
 <div class="row" style="background-image: url('../images/carimage.PNG'); background-repeat:no-repeat;background-size: cover;
 background-position: right;">
-    <div class="col-sm-8" style="    font-family: cursive;font-weight: bolder;color: blue;font-size: 40px;
+    <div class="col-sm-9" style="font-family: cursive;font-weight: bolder;color: blue;font-size: 40px;
     padding: 10px 0px 10px 40px;">
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
         <div class="row pleaseRegister" >
             Login
         </div>
+        <span style="color: red;">{{errorMsg}}</span>
         <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
             <div class="form-group">
-                <label class="signUplabel" for="E-mail">E-mail</label>
-                <input type="email" id="email" name="email" class="form-control" required  [(ngModel)]="model.email" placeholder="Please enter email ID">
+                <input type="email" id="email" name="email" class="form-control" [(ngModel)]="model.email" placeholder="Email ID">
             </div>  
             <div class="form-group">
-                <label class="signUplabel" for="Password">Password</label>
-                <input type="password" id= "password" name= "password" class="form-control" required  [(ngModel)]="model.password"placeholder="Please enter password">
+                <input type="password" id= "password" name= "password" class="form-control" [(ngModel)]="model.password" placeholder="Password">
             </div>  
-            <button style="margin-bottom: 180px;" type="submit" class="btn btn-success" [disabled]="!loginForm.form.valid">Login</button>
+            <button style="margin-bottom: 180px;" type="submit" class="btn btn-success">Login</button>
         </form>   
     </div> 
 </div>
