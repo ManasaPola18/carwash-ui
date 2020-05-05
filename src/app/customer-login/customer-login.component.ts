@@ -4,6 +4,7 @@ import { Login } from './login';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CarwashservicesService } from '../carwashservices.service';
 import { SignupcomponentComponent } from '../signupcomponent/signupcomponent.component';
+import { Constants } from '../constants';
 
 @Component({ 
   selector: 'app-customer-login',
@@ -43,7 +44,7 @@ export class CustomerLoginComponent implements OnInit {
     }
 
     this.carWashService.isValidUser(this.model.email, this.model.password).subscribe(
-        (data: String) => {
+        (data: String) => { document.getElementById('loginStatus').innerHTML="Logout";
           if (data == 'Customer') {
             this.router.navigate(['/customerdetails']);
           } else if (data == 'Washer') {

@@ -12,6 +12,7 @@ export class CarwashservicesService {
 
   saveUserDetailsUrl:string = "http://localhost:8080/carwash/saveCustomer";
   isValidUserUrl:string = "http://localhost:8080/carwash/login";
+  getUserListUrl:string = "http://localhost:8080/carwash/userList"
  
   saveUserDetailsHttpOptions = {
     headers: new HttpHeaders({
@@ -49,6 +50,10 @@ export class CarwashservicesService {
   isValidUser(email:String, password:String) : Observable<String> {
     return this.http.get(this.isValidUserUrl+"?email="+email+"&password="+password,
     {responseType: 'text'});
+  }
+  
+  getUserList(userType:String) : Observable<string[]> {
+    return this.http.get<string[]>(this.getUserListUrl+"?userType="+userType);
   }
 
 }

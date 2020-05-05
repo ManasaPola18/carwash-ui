@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Constants } from './constants';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class AppComponent {
   title = 'car-wash-poc';
+  
+  constructor() {
+
+  }
+
 }
