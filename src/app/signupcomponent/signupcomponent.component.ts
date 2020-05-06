@@ -51,6 +51,7 @@ export class SignupcomponentComponent implements OnInit {
     }
        
     if (this.model.name == undefined || !userName.test(this.model.name)) {
+      console.log("In name");
       this.errorMsg ="Name need to be atleast 4 to 15 characters and special characters -,_";
       return false;
     }

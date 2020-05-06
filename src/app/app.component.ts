@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Constants } from './constants';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,17 @@ import { Constants } from './constants';
 export class AppComponent {
   title = 'car-wash-poc';
   
-  constructor() {
+  constructor(private route: ActivatedRoute,
+    private router: Router) {
 
+  }
+
+  loginClick() {
+    localStorage.removeItem("userType");
+    localStorage.removeItem("userId");
+    document.getElementById('userType').innerHTML='';
+    document.getElementById('userId').innerHTML='';
+    this.router.navigate(["/customerlogin"]);
   }
 
 }

@@ -8,6 +8,8 @@ import { CustomerdetailsComponent } from './customerdetails/customerdetails.comp
 import { WasherdetailsComponent } from './washerdetails/washerdetails.component';
 import { WashrequestComponent } from './washrequest/washrequest.component';
 import { AdminComponent } from './admin/admin.component';
+import {OrderMgmtComponent} from './order-mgmt/order-mgmt.component';
+import { ProfilemanagementComponent } from './profilemanagement/profilemanagement.component';
 
 const routes: Routes = [
   { path: 'introduction', component: IntroductionComponent},
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'washdetails', component: WasherdetailsComponent },
   { path: 'washrequest', component: WashrequestComponent},
   { path: 'admin', component: AdminComponent},
+  { path: 'orders', component: OrderMgmtComponent},
+  { path: 'profileManagement/:emailid', component: ProfilemanagementComponent},
   { path: '',   redirectTo: '/introduction', pathMatch: 'full' }, // redirect to `first-component`
   { path: '**', component: CustomerLoginComponent },
 ];

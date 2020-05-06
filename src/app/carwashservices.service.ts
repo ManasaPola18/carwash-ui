@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import {Customer} from './signupcomponent/customer';
 import { HttpHeaders } from '@angular/common/http';
+import { Car } from './car/car';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,13 @@ export class CarwashservicesService {
   saveUserDetailsUrl:string = "http://localhost:8080/carwash/saveCustomer";
   isValidUserUrl:string = "http://localhost:8080/carwash/login";
   getUserListUrl:string = "http://localhost:8080/carwash/userList"
+  getUserDetailsUrl:string = "http://localhost:8080/carwash/userdetails";
+  addCarUrl:string = "http://localhost:8080/carwash/addcar";
+  getCarDetailsUrl:string = "http://localhost:8080/carwash/cardetails";
+  getCarsUrl:string = "http://localhost:8080/carwash/cars";
+  updateUserDetailsUrl:string = "http://localhost:8080/carwash/userdetails";
  
-  saveUserDetailsHttpOptions = {
+  jsonHttpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
     })
@@ -41,7 +47,14 @@ export class CarwashservicesService {
   };
 
   saveUserDetails(customer: Customer) : Observable<any> {
-    return this.http.post<any>(this.saveUserDetailsUrl, customer, this.saveUserDetailsHttpOptions)
+    return this.http.post<any>(this.saveUserDetailsUrl, customer, this.jsonHttpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  };
+
+  updateUserDetails(customer: Customer) : Observable<any> {
+    return this.http.post<any>(this.updateUserDetailsUrl, customer, this.jsonHttpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -56,4 +69,22 @@ export class CarwashservicesService {
     return this.http.get<string[]>(this.getUserListUrl+"?userType="+userType);
   }
 
+  getUserDetails(email:String) : Observable<Customer> {
+    return this.http.get<Customer>(this.getUserDetailsUrl+"?emailId="+email);
+  }
+
+  addCar(carDetails:Car) : Observable<boolean> {
+    return this.http.post<any>(this.addCarUrl, carDetails, this.jsonHttpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getCarDetails(id:Number) : Observable<Car> {
+    return this.http.get<Car>(this.getCarDetailsUrl+"?id="+id);
+  }
+  
+ getCars(custId:Number) : Observable<Car[]> {
+   return this.http.get<Car[]>(this.getCarsUrl+"?custId="+custId, this.jsonHttpOptions);
+ }
 }

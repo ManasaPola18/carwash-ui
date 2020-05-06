@@ -7,7 +7,7 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { from } from 'rxjs';
 import { SignupcomponentComponent } from './signupcomponent/signupcomponent.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CarwashservicesService } from './carwashservices.service';
@@ -15,6 +15,10 @@ import { CustomerdetailsComponent } from './customerdetails/customerdetails.comp
 import { WasherdetailsComponent } from './washerdetails/washerdetails.component';
 import { WashrequestComponent } from './washrequest/washrequest.component';
 import { AdminComponent } from './admin/admin.component';
+import { OrderMgmtComponent } from './order-mgmt/order-mgmt.component';
+import { ProfilemanagementComponent } from './profilemanagement/profilemanagement.component';
+import { ProfiledetailsComponent } from './profiledetails/profiledetails.component';
+import { CarComponent } from './car/car.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { AdminComponent } from './admin/admin.component';
     CustomerdetailsComponent,
     WasherdetailsComponent,
     WashrequestComponent,
-    AdminComponent
+    AdminComponent,
+    OrderMgmtComponent,
+    ProfilemanagementComponent,
+    ProfiledetailsComponent,
+    CarComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +43,7 @@ import { AdminComponent } from './admin/admin.component';
     NgbModule,
     HttpClientModule
   ],
-  providers: [CarwashservicesService],
+  providers: [CarwashservicesService, NgbActiveModal],
   bootstrap: [AppComponent]
 
 

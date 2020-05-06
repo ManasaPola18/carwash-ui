@@ -6,13 +6,11 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
     <!--   <li><a class="navbar-brand" href="#">Sign Up</a></li> -->
-      <li><a id="loginStatus" class="navbar-brand" href="/customerlogin">Login</a></li>
+      <li><a id="loginStatus" class="navbar-brand" (click)="loginClick();" style="cursor: pointer;">Login</a></li>
     </ul>
   </div>
 </nav>
 <div class="container" style="max-width: 100%;">
+  <span id="userType"></span> <span id="userId"></span>
   <router-outlet></router-outlet>
 </div>
-
-
-

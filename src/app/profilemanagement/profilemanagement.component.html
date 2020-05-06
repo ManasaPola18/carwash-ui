@@ -1,0 +1,20 @@
+<div  class="card text-white bg-info mb-3" style="max-width: 20rem;">
+    <div class="card-header">Profile Management</div>
+        <div class="card-body">
+            <div class="form-group">
+                <select (change)="onUserTypeChange($event.target.value)" id="userType" name="userType" [(ngModel)]="userType" class="form-control">
+                    <option value="" disabled selected>Select User Type</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Washer">Washer</option>
+                </select><br>
+                <select [style.visibility]="emailIds.length > 0 ? 'visible' : 'hidden'" name="selectedEmailId"  class="form-control" 
+                    [(ngModel)]="selectedEmailId" (change)="OnUserChange()">
+                    <option *ngFor="let mail of emailIds" 
+                    [attr.selected]="mail == 'Select User' ? true : null"
+                    [attr.disabled]="mail == 'Select User' ? true : null">
+                 {{mail}}</option>
+                </select>
+            </div> 
+            <app-profiledetails [selectedEmailId]="selectedEmailId" *ngIf="(selectedEmailId != 'Select User' && userType == 'Customer') || userType == 'Washer'"></app-profiledetails>
+        </div>
+</div>

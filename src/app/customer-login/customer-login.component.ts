@@ -4,7 +4,7 @@ import { Login } from './login';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CarwashservicesService } from '../carwashservices.service';
 import { SignupcomponentComponent } from '../signupcomponent/signupcomponent.component';
-import { Constants } from '../constants';
+import { stringify } from 'querystring';
 
 @Component({ 
   selector: 'app-customer-login',
@@ -16,6 +16,8 @@ export class CustomerLoginComponent implements OnInit {
   public unamePattern:string = "^[a-z0-9_-]{4,15}$";
   public mobnumPattern:string = "[0-9]{10}$"; 
   public emailPattern:string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  userType:string = '';
+  userId:string = ''; 
 
   constructor(
     private route: ActivatedRoute,
@@ -44,17 +46,30 @@ export class CustomerLoginComponent implements OnInit {
     }
 
     this.carWashService.isValidUser(this.model.email, this.model.password).subscribe(
-        (data: String) => { document.getElementById('loginStatus').innerHTML="Logout";
-          if (data == 'Customer') {
+        (data: String) => { 
+          console.log("data::"+data);
+          if(data.indexOf("Customer") | data.indexOf("Washer") | data.indexOf("ADMIN")) {
+            console.log("In if condition for splitting");
+            let userdetails:string[] = data.split("-");
+            this.userType = userdetails[0];
+            this.userId = userdetails[1];
+            console.log("User type ::"+this.userType);
+            localStorage.setItem("userType", this.userType);
+            localStorage.setItem("userId", this.userId);
+            document.getElementById('loginStatus').innerHTML="Logout";
+          } else {
+            this.errorMsg ="Invalid email or password.";
+            this.model = new Login();
+            return;
+          }
+
+          if (this.userType == 'Customer') {
             this.router.navigate(['/customerdetails']);
-          } else if (data == 'Washer') {
+          } else if (this.userType == 'Washer') {
             this.router.navigate(['/washdetails']);
-          } else if (data=='ADMIN') {
+          } else if (this.userType=='ADMIN') {
             this.router.navigate(['/admin']);
-         } else {
-          this.errorMsg ="Invalid email or password.";
-          this.model = new Login();
-         }
+         } 
       }
     );
   }

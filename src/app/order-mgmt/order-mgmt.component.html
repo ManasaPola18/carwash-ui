@@ -1,0 +1,63 @@
+<div class="row" style="background-image: url('../images/carimage.PNG'); background-repeat:no-repeat;background-size: cover;
+background-position: right;">
+    <div class="col-sm-9" style="font-family: cursive;font-weight: bolder;color: blue;font-size: 40px;
+    padding: 10px 0px 10px 40px;">
+    </div>
+    <div class="col-sm-3">
+        <div class="row" style="font-weight: bolder;font-size: x-large;padding: 20px;">
+            Orders
+        </div>
+        <form #carwashform="ngForm">
+            <div class="form-group">
+                <div class="row">
+                    <label for="carName">Car Name</label>
+                </div>
+                <input type="text" id="name" name="name" class="form-control"  > 
+            </div> 
+            <div class="form-group">
+                <div class="row">
+                    <label for="orderId">Order ID</label>
+                </div>
+                <input type="number" id= "orderID" name= "orderID" class="form-control"  > 
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label for="carType">Car Type</label>
+                </div>
+                <input type="text" id= "carType" name= "carType" class="form-control" />  
+            </div>  
+            <div class="form-group">
+                <div class="row">
+                    <label for="carNo">Car Number</label>
+                </div>
+                <input type="number" id="carNo" name="CarNo"   class="form-control">
+            </div>  
+            <div class="form-group">
+                <div class="row">
+                    <label for="location">Location</label>
+                </div>
+                <input type="text" id="location" name="location"   class="form-control">
+            </div>  
+            <div class="form-group">
+                <div class="row">
+                    <label for="paymentDetails">Location</label>
+                </div>
+                <input type="paymentDetails" id="paymentDetails" name="paymentDetails" class="form-control"  >
+            </div>     
+            <div class="row">
+                <div class="col-sm-4 fieldLabel">
+                
+                </div> 
+                <div class="col-sm-8">
+                    <button class="btn btn-success" routerLink="/admin" >Show less..</button>
+                </div>
+            </div>  
+                    
+        </form>
+    </div>
+</div>
+
+
+
+
+
