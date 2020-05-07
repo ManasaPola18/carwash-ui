@@ -14,7 +14,11 @@ export class ProfiledetailsComponent implements OnInit {
   @Input() selectedEmailId:string;
   userModel:Customer;
   errorMsg:String = '';
+  successMsg:String = '';
   cars:Car[] = [];
+  public unamePattern:string = "^[a-z0-9_-]{4,15}$";
+  public mobnumPattern:string = "[0-9]{10}$"; 
+  public emailPattern:string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
   constructor(private modalService: NgbModal, 
     private carWashService: CarwashservicesService, 
@@ -48,21 +52,54 @@ export class ProfiledetailsComponent implements OnInit {
     }
   }
 
+  
+
   updateUserProfile() {
     console.log("customer id ::: "+this.userModel.id);
+    if (!this.validateModel()) {
+      return;
+    } else {
     this.carWashService.updateUserDetails(this.userModel).subscribe((data:boolean)=>{
         console.log("update user details "+data);
         if(data){
-          this.errorMsg ='successfully updated';
+          this.successMsg ='Successfully updated';
         }
-    });
+      });
+    }
   }
 
   getCarDetails() {
     console.log("In getcardetails");
     this.carWashService.getCars(this.userModel.id).subscribe((data:Car[]) => {
       this.cars = data;
+      console.log("update user details "+data);
+        if(data){
+          this.successMsg ='Successfully updated';
+        }
     });
   }
+
+  validateModel():boolean {
+    this.errorMsg = '';
+    let userName = new RegExp(this.unamePattern);
+    let mobileNumber = new RegExp(this.mobnumPattern);
+    let email = new RegExp(this.emailPattern);
+    
+     
+    if (this.userModel.name == undefined || !userName.test(this.userModel.name)) {
+      console.log("In name");
+      this.errorMsg ="Name need to be atleast 4 to 15 characters and special characters -,_";
+      return false;
+    }
+    if (this.userModel.phNum == undefined || !mobileNumber.test(this.userModel.phNum)) {
+      this.errorMsg ="Mobile number should be of 10 digits";
+      return false;
+    }
+    if (this.userModel.emailId == undefined || !email.test(this.userModel.emailId)) {
+      this.errorMsg ="Enter valid email address";
+      return false;
+    }
+    return true;
+  };
 
 }

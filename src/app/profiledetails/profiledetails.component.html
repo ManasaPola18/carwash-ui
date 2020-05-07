@@ -9,6 +9,7 @@
         <ngb-tab title="Profile">
           <ng-template ngbTabContent>
             <div style="padding-top: 10px;">
+                <span style="color:green">{{successMsg}}</span>
                 <span style="color:red">{{errorMsg}}</span>
                 <div class="form-group" style="font-weight: bold;">
                     <label for="Name">Name</label>
@@ -48,12 +49,12 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let car of cars;let i = index" [attr.data-index]="i">
-                        <th scope="row">{{i+1}}</th>  
-                      <th scope="row">{{car.carNum}}</th>
-                      <th scope="row">{{car.carType}}</th>
-                      <th scope="row">{{car.carColor}}</th>
-                      <th scope="row">{{car.regNum}}</th>
-                      <th scope="row">{{car.carStatus}}</th>
+                      <th scope="row">{{i+1}}</th>  
+                      <td scope="row">{{car.carNum}}</td>
+                      <td scope="row">{{car.carType}}</td>
+                      <td scope="row">{{car.carColor}}</td>
+                      <td scope="row">{{car.regNum}}</td>
+                      <td scope="row">{{car.carStatus}}</td>
                     </tr>
                     </tbody>
                   </table>
