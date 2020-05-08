@@ -48,7 +48,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let car of cars;let i = index" [attr.data-index]="i">
+                    <tr *ngFor="let car of cars;let i = index" [attr.data-index]="i" class="carDetails" id ="car.id">
                       <th scope="row">{{i+1}}</th>  
                       <td scope="row">{{car.carNum}}</td>
                       <td scope="row">{{car.carType}}</td>
@@ -61,9 +61,9 @@
               </ng-template>
             </ngb-tab>
         <ngb-tab>
-        <ng-template ngbTabTitle>Car Details</ng-template>
+        <ng-template ngbTabTitle><span class="carDetails">Car Details</span></ng-template>
           <ng-template ngbTabContent>
-             <app-car [customerId]="userModel.id"></app-car>
+             <app-car [customerId]="userModel.id" [carId]="selectedCarId"></app-car>
           </ng-template>
         </ngb-tab>
       </ngb-tabset>

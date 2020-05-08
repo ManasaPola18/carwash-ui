@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, Renderer2 } from '@angular/core';
 import { ModalDismissReasons, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CarwashservicesService } from '../carwashservices.service';
 import { Customer } from '../signupcomponent/customer';
@@ -12,6 +12,8 @@ import { Car } from '../car/car';
 export class ProfiledetailsComponent implements OnInit {
 
   @Input() selectedEmailId:string;
+  selectedCarId:Number;
+
   userModel:Customer;
   errorMsg:String = '';
   successMsg:String = '';
@@ -22,10 +24,11 @@ export class ProfiledetailsComponent implements OnInit {
 
   constructor(private modalService: NgbModal, 
     private carWashService: CarwashservicesService, 
-    public activeModal: NgbActiveModal) {   }
+    public activeModal: NgbActiveModal,private render: Renderer2) {   }
 
   ngOnInit(): void {
   }
+
   closeResult = '';
 
   
@@ -43,6 +46,8 @@ export class ProfiledetailsComponent implements OnInit {
   }
 
   getDismissReason(reason: any): string {
+    this.errorMsg = '';
+    this.successMsg= '';
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -52,9 +57,9 @@ export class ProfiledetailsComponent implements OnInit {
     }
   }
 
-  
-
   updateUserProfile() {
+    this.errorMsg = '';
+    this.successMsg= '';
     console.log("customer id ::: "+this.userModel.id);
     if (!this.validateModel()) {
       return;
@@ -100,6 +105,12 @@ export class ProfiledetailsComponent implements OnInit {
       return false;
     }
     return true;
-  };
+  }
+
+  editCarDetails(id:Number) {
+    console.log("Car Id :: "+id);
+    this.selectedCarId = id;
+    document.getElementsByClassName('carDetails')[0];
+  }
 
 }

@@ -12,16 +12,32 @@ export class CarComponent implements OnInit {
   successMsg:String = '';
   errorMsg:String = '';
   @Input() customerId:number;
+  @Input() carId:number;
   carTypes:string[] = ['Hatchback', 'Sedan', 'MPV', 'SUV', 'Crossover', 'Coupe', 'Convertible'];
   public carNumPattern:string = "^[a-z0-9_-]{10,17}$"
   public regNumPattern:string = "^[a-z0-9_-]{30}$"
    
-  constructor(private carWashService:CarwashservicesService) { }
+  model = new Car();
+  constructor(private carWashService:CarwashservicesService) {
+    console.log("In Car component ... carid :: "+this.carId);
+      if(this.carId != undefined) {
+        this.carWashService.getCarDetails(this.carId).subscribe((data:Car) => {
+          this.model = data;
+        })
+      }
+
+   }
  
   ngOnInit(): void {
+    console.log("In Car component ... carid :: "+this.carId);
+    if(this.carId != undefined) {
+      this.carWashService.getCarDetails(this.carId).subscribe((data:Car) => {
+        this.model = data;
+      })
+    }
   }
 
-  model = new Car();
+ 
 
   saveCar() {
     this.model.custId = this.customerId;

@@ -1,5 +1,4 @@
 import { Component, OnInit, SchemaMetadata } from '@angular/core';
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarwashservicesService } from '../carwashservices.service';
 

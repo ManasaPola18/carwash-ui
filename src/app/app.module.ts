@@ -19,6 +19,8 @@ import { OrderMgmtComponent } from './order-mgmt/order-mgmt.component';
 import { ProfilemanagementComponent } from './profilemanagement/profilemanagement.component';
 import { ProfiledetailsComponent } from './profiledetails/profiledetails.component';
 import { CarComponent } from './car/car.component';
+import { PackageMgmtComponent } from './package-mgmt/package-mgmt.component';
+import { PromoMgmtComponent } from './promo-mgmt/promo-mgmt.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { CarComponent } from './car/car.component';
     OrderMgmtComponent,
     ProfilemanagementComponent,
     ProfiledetailsComponent,
-    CarComponent
+    CarComponent,
+    PackageMgmtComponent,
+    PromoMgmtComponent
   ],
   imports: [
     BrowserModule,
