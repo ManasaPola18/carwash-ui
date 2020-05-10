@@ -32,7 +32,7 @@ export class SignupcomponentComponent implements OnInit {
     if (!this.validateModel()) {
         return;
     }
-     this.carwashservicesService.saveUserDetails(this.model).subscribe((data: String)=>{
+     this.carwashservicesService.saveUserDetails(this.model).subscribe((data: Customer)=>{
      
       console.log("Re-directing to Login page");
       this.router.navigate(['/customerlogin', f.value.userType]);

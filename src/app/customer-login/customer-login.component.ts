@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators, NgModel } from '@angular/forms';
 import { Login } from './login';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CarwashservicesService } from '../carwashservices.service';
 import { SignupcomponentComponent } from '../signupcomponent/signupcomponent.component';
 import { stringify } from 'querystring';
+import { EventEmitter } from 'protractor';
+import { LoginService } from './login-service';
 
 @Component({ 
   selector: 'app-customer-login',
@@ -22,13 +24,15 @@ export class CustomerLoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private carWashService: CarwashservicesService) {}
+    private carWashService: CarwashservicesService,
+    private loginService: LoginService) {}
 
   model = new Login();
 
   ngOnInit(): void {
    
   }
+
 
   onSubmit() { 
     this.errorMsg='';
@@ -56,13 +60,13 @@ export class CustomerLoginComponent implements OnInit {
             console.log("User type ::"+this.userType);
             localStorage.setItem("userType", this.userType);
             localStorage.setItem("userId", this.userId);
-            document.getElementById('loginStatus').innerHTML="Logout";
+            this.loginService.setUserDetails(this.userId, this.userType);
           } else {
             this.errorMsg ="Invalid email or password.";
             this.model = new Login();
             return;
           }
-
+          
           if (this.userType == 'Customer') {
             this.router.navigate(['/customerdetails']);
           } else if (this.userType == 'Washer') {

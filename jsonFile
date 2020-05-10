@@ -10,3 +10,9 @@ List of cars:
 
 [{"id":1,"custId":1,"carNum":"1234","carType":"Sedan","carColor":"red","regNum":"1234","carStatus":"active"},{"id":2,"custId":1,"carNum":"123456","carType":"Hatchback","carColor":"green","regNum":"54322","carStatus":"active"},{"id":3,"custId":1,"carNum":"1234","carType":"Sedan","carColor":"green","regNum":"123456","carStatus":"active"},{"id":4,"custId":1,"carNum":"1234","carType":"Sedan","carColor":"green","regNum":"123456","carStatus":"active"},{"id":5,"custId":1,"carNum":"1234","carType":"Sedan","carColor":"green","regNum":"123456","carStatus":"active"},{"id":6,"custId":1,"carNum":null,"carType":null,"carColor":null,"regNum":null,"carStatus":"active"},{"id":7,"custId":1,"carNum":null,"carType":null,"carColor":null,"regNum":null,"carStatus":"active"},{"id":8,"custId":1,"carNum":"1234","carType":"Crossover","carColor":"green","regNum":"1233456","carStatus":"active"},{"id":10,"custId":1,"carNum":null,"carType":null,"carColor":null,"regNum":null,"carStatus":"active"}]
 
+---------------------------------
+
+Insert into car_wash.wash_costs (ID,NAME,COST,TYPE) values (1,'Hand Wash',200,'Services');
+Insert into car_wash.wash_costs (ID,NAME,COST,TYPE) values (2,'Waterless Wash',150,'Services');
+Insert into car_wash.wash_costs (ID,NAME,COST,TYPE) values (3,'Rinse Wash',300,'Services');
+Insert into car_wash.wash_costs (ID,NAME,COST,TYPE) values (4,'Automatic Wash',450,'Services');

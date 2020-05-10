@@ -8,13 +8,13 @@
                     <option value="Washer">Washer</option>
                 </select><br>
                 <select [style.visibility]="emailIds.length > 0 ? 'visible' : 'hidden'" name="selectedEmailId"  class="form-control" 
-                    [(ngModel)]="selectedEmailId" (change)="OnUserChange()">
+                    [(ngModel)]="selectedEmailId">
                     <option *ngFor="let mail of emailIds" 
-                    [attr.selected]="mail == 'Select User' ? true : null"
-                    [attr.disabled]="mail == 'Select User' ? true : null">
+                    [attr.selected]="mail == 'Select User' ? true : null">
                  {{mail}}</option>
                 </select>
             </div> 
-            <app-profiledetails [selectedEmailId]="selectedEmailId" *ngIf="(selectedEmailId != 'Select User' && userType == 'Customer') || userType == 'Washer'"></app-profiledetails>
+            <app-profiledetails [selectedEmailId]="selectedEmailId" [selectedUserType] = "userType"
+            *ngIf="(userType !='')"></app-profiledetails>
         </div>
 </div>

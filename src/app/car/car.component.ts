@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Car } from './car';
 import { CarwashservicesService } from '../carwashservices.service';
 
@@ -7,7 +7,7 @@ import { CarwashservicesService } from '../carwashservices.service';
   templateUrl: './car.component.html',
   styleUrls: ['./car.component.css']
 })
-export class CarComponent implements OnInit {
+export class CarComponent implements OnInit, OnChanges {
   
   successMsg:String = '';
   errorMsg:String = '';
@@ -15,17 +15,11 @@ export class CarComponent implements OnInit {
   @Input() carId:number;
   carTypes:string[] = ['Hatchback', 'Sedan', 'MPV', 'SUV', 'Crossover', 'Coupe', 'Convertible'];
   public carNumPattern:string = "^[a-z0-9_-]{10,17}$"
-  public regNumPattern:string = "^[a-z0-9_-]{30}$"
+  public regNumPattern:string = "^[a-z0-9_-]{15,30}$"
    
   model = new Car();
   constructor(private carWashService:CarwashservicesService) {
-    console.log("In Car component ... carid :: "+this.carId);
-      if(this.carId != undefined) {
-        this.carWashService.getCarDetails(this.carId).subscribe((data:Car) => {
-          this.model = data;
-        })
-      }
-
+    
    }
  
   ngOnInit(): void {
@@ -37,19 +31,33 @@ export class CarComponent implements OnInit {
     }
   }
 
- 
+  ngOnChanges():void {
+    console.log("In ngOnChanges :: "+this.carId);
+    if (this.carId == undefined) {
+      this.model = new Car();
+    }
+  }
 
-  saveCar() {
+   saveCar() {
     this.model.custId = this.customerId;
     if (!this.validateModel()) {
       return;
     }else{
-    this.carWashService.addCar(this.model).subscribe((data:boolean) => {
-      console.log("Added car :: "+data);
-      if(data){
-        this.successMsg ='Successfully updated';
-        }
-      });
+      if (this.model.id != undefined) {
+          this.carWashService.updateCarDetails(this.model).subscribe((data:boolean)=>{
+            if(data) {
+              this.successMsg ='Successfully updated';
+            }
+          });
+      } else {
+        this.carWashService.addCar(this.model).subscribe((data:boolean) => {
+          console.log("Added car :: "+data);
+          if(data){
+            this.successMsg ='Successfully Added';
+            }
+          });
+      }
+    
     }
   }
 
@@ -66,7 +74,7 @@ export class CarComponent implements OnInit {
       this.errorMsg="Please select car type.";
       return false;
     }
-    if (this.model.carColor == undefined || this.model.carColor!='') {
+    if (this.model.carColor == undefined || this.model.carColor=='') {
       this.errorMsg ="Enter color";
       return false;
     }
@@ -76,4 +84,8 @@ export class CarComponent implements OnInit {
     }
     return true;
   };
+
+  newCar():void {
+    this.model = new Car();
+  }
 }

@@ -1,23 +1,20 @@
 <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
     <div class="card-header">Order Management</div>
-        <div class="card-body">
-            <span style="color:red;">{{errorMsg}}</span>
-              <div class="input-group">
-                <div class="custom-file">
-                  <select id="workStatus" name="workStatus" class="form-control" style="width: 65%;">
-                     <option>Accepted</option>
-                    <option>In progress</option>
-                    <option>Pending</option>
-                    <option>Completed</option>
-                    <option>Cancelled</option>
-                  </select>
-                </div>
-                <div class="input-group-append">
-                  <button class="btn btn-success" type="button">Go</button>
-                </div>
-              </div><br>
-              <div class="input-group">
-                <button class="btn btn-success">New order</button>
-              </div> 
+        <div class="card-body"> 
+            <select id="orderType" name="orderType" class="form-control" [(ngModel)]="orderType">
+                <option value="">Select Order Type</option>
+                <option value="New Order">New Order</option>
+                <option value="Existing Order">Existing Order</option>
+            </select>
+
+            
+
+            <select id="workStatus" name="workStatus" class="form-control" style="width: 65%;">
+              <option>Accepted</option>
+              <option>In progress</option>
+              <option>Pending</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
         </div>
 </div>

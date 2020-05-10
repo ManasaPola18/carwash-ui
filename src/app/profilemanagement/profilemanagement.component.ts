@@ -1,7 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { CarwashservicesService } from '../carwashservices.service';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateUserListService } from './update-user-list-service';
+import { Customer } from '../signupcomponent/customer';
 
 @Component({
   selector: 'app-profilemanagement',
@@ -14,13 +16,18 @@ export class ProfilemanagementComponent implements OnInit {
   selectedEmailId:string = '';
   dropDownBtnName:string = '';
 
-
   constructor(private carwashservice:CarwashservicesService, 
-    private router: Router, private ref: ChangeDetectorRef) { }
+    private router: Router, private ref: ChangeDetectorRef,
+    private updateUserListService : UpdateUserListService) {
+      this.updateUserListService.newCustomer.subscribe((data:string)=>{
+        console.log("dataa ............." + data);
+        this.emailIds.push(data);
+      });
+     }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     
-    }
+  }
 
   onUserTypeChange(userType:string) {
     console.log("In on usertype change.."+userType);
@@ -30,9 +37,5 @@ export class ProfilemanagementComponent implements OnInit {
         this.emailIds = data;
         this.ref.markForCheck();
       });    
-  }
-
-  OnUserChange() {
-    
   }
 }

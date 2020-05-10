@@ -1,13 +1,141 @@
 <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
     <div class="card-header">Package Management</div>
         <div class="card-body">
-            <select id="serviceType" name="serviceType" class="form-control">
-                <option>Services</option>
-                <option>Add-ons</option>
-                <option>Packages</option>
-            </select> 
-            <br>
-            <button class="btn btn-success" >View</button>&nbsp;
-            <button class="btn btn-success" >Create New</button>
+            <span style="color: green;">{{successMsg}}</span>
+            <div class="form-group">
+                <select id="mgmtType" name="mgmtType" class="form-control" [(ngModel)] = "mgmtType" (change)="mgmtTypeOnChange($event.target.value)">
+                    <option value = "Select Options" disabled>Select Options</option>
+                    <option value = "Services">Services</option>
+                    <option value = "Add-ons">Add-ons</option>
+                    <option value= "Packages">Packages</option>
+                </select> 
+            </div>
+            <div class="form-group">
+                <div class="row" *ngIf="mgmtType == 'Services' || mgmtType == 'Add-ons'">
+ 
+                    <div class="col-sm-8">
+                        <input list="id-services" [(ngModel)]="selectedService.name" value="{{selectedService.name}}" class="form-control" 
+                        placeholder="Service Name" (change)="serviceNameChange()" (focus)="serviceNameChange()" >
+                        <datalist id="id-services">
+                            <option *ngFor="let service of serviceMgntList" [value]="service.name">{{service.name}}</option>
+                        </datalist>
+                    </div>
+                    <div class="col-sm-4">
+                        <input id = "serviceCost" [(ngModel)]="selectedService.cost" value="{{selectedService.cost}}" class="form-control"
+                        placeholder="Cost">
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success" *ngIf="selectedService.cost > 0" (click)="saveService(mgmtType)">Save</button>
+            <!-- ---------------------Modal Logic for package management ----------- -->
+            <ng-template #content let-modal>
+                <div class="modal-header">
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                        <li [ngbNavItem]="1">
+                          <a ngbNavLink>Packages</a>
+                          <ng-template ngbNavContent>
+                            <table class="table table-striped table-hover" >
+                                <thead>
+                                <tr>
+                                  <th scope="col" style="border-top: 0px">#</th>
+                                  <th scope="col" style="border-top: 0px">Package Name</th>
+                                  <th scope="col" style="border-top: 0px">Total Cost</th>
+                                  <th scope="col" style="border-top: 0px">Discount Cost</th>
+                                  <th scope="col" style="border-top: 0px">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let pack of packLists;let i = index" [attr.data-index]="i" style="cursor: pointer;" (click) ="editPackDetails(pack.id)">
+                                  <th scope="row">{{i+1}}</th>  
+                                  <td scope="row">{{pack.packageName}}</td>
+                                  <td scope="row">{{pack.totalCost}}</td>
+                                  <td scope="row">{{pack.discountCost}}</td>
+                                  <td scope="row">{{pack.status}}</td>
+                                </tr>
+                                </tbody>
+                             </table>
+                          </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2">
+                          <a ngbNavLink>Package Details</a>
+                          <ng-template ngbNavContent>
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="Package Name">Package Name</label>
+                                            <input type="text" id="packageName" name="packageName" class="form-control" [(ngModel)]="selectedPackageDetails.packageName">
+                                        </div>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="Status">Status</label>
+                                        <select id="status" name="status" class="form-control" [(ngModel)]="selectedPackageDetails.status">
+                                            <option value="Active">Active</option>
+                                            <option value="InActive">In Active</option>
+                                        </select>
+                                    </div>
+                                </div>
+                              </div>
+                           
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="serviceName">Service Name</label>
+                                        <select id="serviceName" name="serviceName" class="form-control" [(ngModel)]="selectedPackageDetails.serviceId" (change)="displayServiceCost()">
+                                            <option *ngFor="let service of serviceMgntList" value={{service.id}}>{{service.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="serviceCost">Service Cost</label>
+                                        <input type="text" id="serviceCost" name="serviceCost" class="form-control" [(ngModel)]="serviceCost" readonly> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="serviceName">Add-Ons</label>
+                                <select class="selectpicker" class="form-control" multiple data-actions-box="true" [(ngModel)]="selectedPackageDetails.addOnId">
+                                    <option *ngFor="let addons of addOnMgntList" value="addons.id">{{addons.name}} - {{addons.cost}}</option>
+                                  </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="Total Cost">Total Cost</label>
+                                        <input type="number" id="totalCost" name="totalCost" class="form-control" [(ngModel)]="selectedPackageDetails.totalCost" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="Discount">Discount</label>
+                                        <input type="number" id="discount" name="discount" class="form-control" [(ngModel)]="selectedPackageDetails.discount">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="Discounted Cost">Discounted Cost</label>
+                                        <input type="number" id="discountCost" name="discountCost" class="form-control" [(ngModel)]="selectedPackageDetails.discountCost" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="border-top: 0px">
+                                <button class="btn btn-success">New Package</button>
+                                <button class="btn btn-success">Save</button>
+                            </div>
+                          </ng-template>
+                        </li>
+                      </ul>
+                      
+                      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                </div>
+              </ng-template>
+              <button class="btn btn-success" *ngIf="mgmtType=='Packages'" (click)="open(content)">View/Edit</button>
+
         </div>
 </div>

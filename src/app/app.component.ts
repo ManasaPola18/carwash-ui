@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectorRef, OnChanges, SimpleChange } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CustomerLoginComponent } from './customer-login/customer-login.component';
+import { LoginService } from './customer-login/login-service';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +11,32 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'car-wash-poc';
-  
-  constructor(private route: ActivatedRoute,
-    private router: Router) {
+  userId:string;
+  userType:string;
+  loginBtnTitle:string = 'Login';
 
+  constructor(private route: ActivatedRoute,
+    private router: Router, private loginService:LoginService) {
+      this.loginService.userId.subscribe((data:string)=> {
+        this.userId = data;
+      });
+      this.loginService.userType.subscribe((data:string)=> {
+        this.userType = data;
+        this.loginBtnTitle = "Logout";
+      });
+      if (localStorage.getItem("userId")) {
+        this.loginBtnTitle = "Logout";
+      } 
+  }
+
+  ngOnInit(): void {
+   
   }
 
   loginClick() {
     localStorage.removeItem("userType");
     localStorage.removeItem("userId");
-    document.getElementById('userType').innerHTML='';
-    document.getElementById('userId').innerHTML='';
+    this.loginBtnTitle = "Login";
     this.router.navigate(["/customerlogin"]);
   }
 

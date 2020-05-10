@@ -21,6 +21,9 @@ import { ProfiledetailsComponent } from './profiledetails/profiledetails.compone
 import { CarComponent } from './car/car.component';
 import { PackageMgmtComponent } from './package-mgmt/package-mgmt.component';
 import { PromoMgmtComponent } from './promo-mgmt/promo-mgmt.component';
+import { ReportMgmtComponent } from './report-mgmt/report-mgmt.component';
+import { LoginService } from './customer-login/login-service';
+import { AuthGuard, httpInterceptorProviders } from './auth-guard';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,8 @@ import { PromoMgmtComponent } from './promo-mgmt/promo-mgmt.component';
     ProfiledetailsComponent,
     CarComponent,
     PackageMgmtComponent,
-    PromoMgmtComponent
+    PromoMgmtComponent,
+    ReportMgmtComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,7 @@ import { PromoMgmtComponent } from './promo-mgmt/promo-mgmt.component';
     NgbModule,
     HttpClientModule
   ],
-  providers: [CarwashservicesService, NgbActiveModal],
+  providers: [CarwashservicesService, NgbActiveModal, LoginService, httpInterceptorProviders],
   bootstrap: [AppComponent]
 
 

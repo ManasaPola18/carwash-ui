@@ -1,0 +1,4 @@
+.tab-content>.active {
+    display: block;
+    overflow: scroll !important;
+}

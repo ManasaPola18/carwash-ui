@@ -5,6 +5,8 @@ import { catchError, retry } from 'rxjs/operators';
 import {Customer} from './signupcomponent/customer';
 import { HttpHeaders } from '@angular/common/http';
 import { Car } from './car/car';
+import { ServiceMgnt } from './package-mgmt/service-mgnt';
+import { PackageDetails } from './package-mgmt/package-details';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +21,20 @@ export class CarwashservicesService {
   getCarDetailsUrl:string = "http://localhost:8080/carwash/cardetails";
   getCarsUrl:string = "http://localhost:8080/carwash/cars";
   updateUserDetailsUrl:string = "http://localhost:8080/carwash/userdetails";
- 
+  updateCarDetailsUrl:string = "http://localhost:8080/carwash/cardetails";
+  savewashcostsUrl:string = "http://localhost:8080/carwash/savewashcost";
+  updatewashcostUrl:string = "http://localhost:8080/carwash/updateWashCostDetails";
+  getwashcostlistUrl:string = "http://localhost:8080/carwash/washcostslist";
+  getWashcostdetailsUrl:string = "http://localhost:8080/carwash/getwashcosts";
+  savePackageDetailsUrl:string = "http://localhost:8080/carwash/savepackagedetails";
+  updatePackageDetailsUrl:string = "http://localhost:8080/carwash/updatepackagedetails";
+  packageDetailsUrl:string = "http://localhost:8080/carwash/packagedetails";
+
   jsonHttpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
     })
   };
-
-  
   
   constructor(private http: HttpClient) { }
 
@@ -46,8 +54,8 @@ export class CarwashservicesService {
       'Something bad happened; please try again later.');
   };
 
-  saveUserDetails(customer: Customer) : Observable<any> {
-    return this.http.post<any>(this.saveUserDetailsUrl, customer, this.jsonHttpOptions)
+  saveUserDetails(customer: Customer) : Observable<Customer> {
+    return this.http.post<Customer>(this.saveUserDetailsUrl, customer, this.jsonHttpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -84,7 +92,45 @@ export class CarwashservicesService {
     return this.http.get<Car>(this.getCarDetailsUrl+"?id="+id);
   }
   
- getCars(custId:Number) : Observable<Car[]> {
-   return this.http.get<Car[]>(this.getCarsUrl+"?custId="+custId, this.jsonHttpOptions);
- }
+  getCars(custId:Number) : Observable<Car[]> {
+    return this.http.get<Car[]>(this.getCarsUrl+"?custId="+custId, this.jsonHttpOptions);
+  }
+
+  updateCarDetails(car: Car) : Observable<boolean> {
+    return this.http.post<boolean>(this.updateCarDetailsUrl, car, this.jsonHttpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+ 
+  saveWashCosts(serviceCost:ServiceMgnt) : Observable<ServiceMgnt> {
+    return this.http.post<ServiceMgnt>(this.savewashcostsUrl, serviceCost, this.jsonHttpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  updateWashCost(serviceCost:ServiceMgnt) : Observable<ServiceMgnt> {
+    return this.http.post<ServiceMgnt>(this.updatewashcostUrl, serviceCost, this.jsonHttpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+ 
+  getWashCostList(type:string) : Observable<ServiceMgnt[]> {
+    return this.http.get<ServiceMgnt[]>(this.getwashcostlistUrl+"?type="+type, this.jsonHttpOptions);
+  }
+ 
+  savePackageDetails(packagedetails:PackageDetails) : Observable<PackageDetails> {
+    return this.http.post<PackageDetails>(this.savePackageDetailsUrl, packagedetails, this.jsonHttpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updatePackageDetails(packagedetails:PackageDetails) : Observable<PackageDetails> {
+    return this.http.post<PackageDetails>(this.updatePackageDetailsUrl, packagedetails, this.jsonHttpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getPackageDetails(packageName:string) : Observable<PackageDetails[]> {
+    return this.http.get<PackageDetails[]>(this.packageDetailsUrl+"?packageName="+packageName, this.jsonHttpOptions);
+  }
 }

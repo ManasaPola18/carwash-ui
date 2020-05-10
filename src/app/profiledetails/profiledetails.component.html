@@ -4,68 +4,70 @@
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-    <ngb-tabset [destroyOnHide]="false" style="padding: 0px 20px;">
-        <ngb-tab title="Profile">
-          <ng-template ngbTabContent>
+      </div> 
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="padding: 0px 10px;">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Profile</a>
+          <ng-template ngbNavContent>
             <div style="padding-top: 10px;">
-                <span style="color:green">{{successMsg}}</span>
-                <span style="color:red">{{errorMsg}}</span>
-                <div class="form-group" style="font-weight: bold;">
-                    <label for="Name">Name</label>
-                    <input type="text" id="name" name="name" class="form-control"   [(ngModel)]="userModel.name">
-                </div> 
-                <div class="form-group" style="font-weight: bold;">
-                     <label for="contactNo">Phone Number</label>
-                    <input type="text" id="contactno" name="contactno"  [(ngModel)]="userModel.phNum" class="form-control">
-                </div>  
-                <div class="form-group" style="font-weight: bold;"> 
-                    <label for="address">Address</label>
-                    <textarea rows="3" id="address" name="address" class="form-control" [(ngModel)]="userModel.address"></textarea> 
-                </div>  
-                <div class="form-group" style="font-weight: bold;">
-                    <label for="email">Email-Id</label>
-                    <input type="email" id="email" name="email" class="form-control" [(ngModel)]="userModel.emailId">
-                </div>    
-                <div class="modal-footer" style="border-top: 0px">
-                    <button class="btn btn-success" (click)="updateUserProfile()">Save</button>
-                </div> 
-            </div>
+              <span style="color:green">{{successMsg}}</span>
+              <span style="color:red">{{errorMsg}}</span>
+              <div class="form-group" style="font-weight: bold;">
+                  <label for="Name">Name</label>
+                  <input type="text" id="name" name="name" class="form-control"   [(ngModel)]="userModel.name">
+              </div> 
+              <div class="form-group" style="font-weight: bold;">
+                   <label for="contactNo">Phone Number</label>
+                  <input type="text" id="contactno" name="contactno"  [(ngModel)]="userModel.phNum" class="form-control">
+              </div>  
+              <div class="form-group" style="font-weight: bold;"> 
+                  <label for="address">Address</label>
+                  <textarea rows="3" id="address" name="address" class="form-control" [(ngModel)]="userModel.address"></textarea> 
+              </div>  
+              <div class="form-group" style="font-weight: bold;">
+                  <label for="email">Email-Id</label>
+                  <input type="email" id="email" name="email" class="form-control" [(ngModel)]="userModel.emailId">
+              </div>    
+              <div class="modal-footer" style="border-top: 0px">
+                  <button class="btn btn-success" (click)="updateUserProfile()">Save</button>
+              </div> 
+          </div>
           </ng-template>
-        </ngb-tab>
-        <ngb-tab>
-            <ng-template ngbTabTitle ><span (click)="getCarDetails()">Cars</span></ng-template>
-              <ng-template ngbTabContent>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                      <th scope="col" style="border-top: 0px">#</th>
-                      <th scope="col" style="border-top: 0px">Number</th>
-                      <th scope="col" style="border-top: 0px">Type</th>
-                      <th scope="col" style="border-top: 0px">Color</th>
-                      <th scope="col" style="border-top: 0px">Regn No.</th>
-                      <th scope="col" style="border-top: 0px">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let car of cars;let i = index" [attr.data-index]="i" class="carDetails" id ="car.id">
-                      <th scope="row">{{i+1}}</th>  
-                      <td scope="row">{{car.carNum}}</td>
-                      <td scope="row">{{car.carType}}</td>
-                      <td scope="row">{{car.carColor}}</td>
-                      <td scope="row">{{car.regNum}}</td>
-                      <td scope="row">{{car.carStatus}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-              </ng-template>
-            </ngb-tab>
-        <ngb-tab>
-        <ng-template ngbTabTitle><span class="carDetails">Car Details</span></ng-template>
-          <ng-template ngbTabContent>
-             <app-car [customerId]="userModel.id" [carId]="selectedCarId"></app-car>
+        </li>
+        <li [ngbNavItem]="2" [style.display]="displayCarTabs">
+          <a ngbNavLink>Cars</a>
+          <ng-template ngbNavContent>
+            <table class="table table-striped table-hover" >
+              <thead>
+              <tr>
+                <th scope="col" style="border-top: 0px">#</th>
+                <th scope="col" style="border-top: 0px">Number</th>
+                <th scope="col" style="border-top: 0px">Type</th>
+                <th scope="col" style="border-top: 0px">Color</th>
+                <th scope="col" style="border-top: 0px">Regn No.</th>
+                <th scope="col" style="border-top: 0px">Status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let car of cars;let i = index" [attr.data-index]="i" style="cursor: pointer;" (click) ="editCarDetails(car.id)">
+                <th scope="row">{{i+1}}</th>  
+                <td scope="row">{{car.carNum}}</td>
+                <td scope="row">{{car.carType}}</td>
+                <td scope="row">{{car.carColor}}</td>
+                <td scope="row">{{car.regNum}}</td>
+                <td scope="row">{{car.carStatus}}</td>
+              </tr>
+              </tbody>
+           </table>
           </ng-template>
-        </ngb-tab>
-      </ngb-tabset>
+        </li>
+        <li [ngbNavItem]="3" [style.display]="displayCarTabs">
+          <a ngbNavLink (click)="clickCarDetails()">Car Details</a>
+          <ng-template ngbNavContent>
+            <app-car [customerId]="userModel.id" [carId]="selectedCarId"></app-car>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav" class="mt-2" style="padding: 0px 10px;overflow: auto;"></div>
 </ng-template>
-  <button class="btn btn-success" (click)="open(content)">Edit Profile</button>
+  <button class="btn btn-success" (click)="open(content)">{{profileBtnName}}</button>

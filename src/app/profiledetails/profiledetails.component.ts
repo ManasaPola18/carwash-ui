@@ -1,32 +1,51 @@
-import { Component, OnInit, Input, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, Renderer2, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { ModalDismissReasons, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CarwashservicesService } from '../carwashservices.service';
 import { Customer } from '../signupcomponent/customer';
 import { Car } from '../car/car';
+import { UpdateUserListService } from '../profilemanagement/update-user-list-service';
 
 @Component({
   selector: 'app-profiledetails',
   templateUrl: './profiledetails.component.html',
   styleUrls: ['./profiledetails.component.css']
 })
-export class ProfiledetailsComponent implements OnInit {
+export class ProfiledetailsComponent implements OnInit, OnChanges {
 
   @Input() selectedEmailId:string;
+  @Input() selectedUserType:string;
   selectedCarId:Number;
-
+  active = 1;
   userModel:Customer;
   errorMsg:String = '';
   successMsg:String = '';
   cars:Car[] = [];
+  displayCarTabs:string = 'block';
+  profileBtnName:string;
+
   public unamePattern:string = "^[a-z0-9_-]{4,15}$";
   public mobnumPattern:string = "[0-9]{10}$"; 
   public emailPattern:string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
 
   constructor(private modalService: NgbModal, 
     private carWashService: CarwashservicesService, 
-    public activeModal: NgbActiveModal,private render: Renderer2) {   }
+    public activeModal: NgbActiveModal,private render: Renderer2, 
+    private changeDetectorRef : ChangeDetectorRef, 
+    private updateUserListService : UpdateUserListService) {  
+      
+     }
 
   ngOnInit(): void {
+  }
+
+ /*  ngAfterViewInit(): void {
+    console.log("In after view init");
+    this.profileBtnName = (this.selectedEmailId == 'Select User' ? "Add Profile" : "Edit Profile");  
+    this.changeDetectorRef.markForCheck();
+  } */
+
+  ngOnChanges() {
+    this.profileBtnName = (this.selectedEmailId == 'Select User' ? "Add Profile" : "Edit Profile");  
   }
 
   closeResult = '';
@@ -34,15 +53,27 @@ export class ProfiledetailsComponent implements OnInit {
   
 
   open(content:any) {
-
-    this.carWashService.getUserDetails(this.selectedEmailId).subscribe((data:Customer) => {
+    this.selectedCarId = undefined; 
+    console.log("this.selectedEmailId    "+this.selectedEmailId);
+    this.displayCarTabs = (this.selectedUserType == 'Washer' ? 'none' : 'block');
+    if (this.selectedEmailId != 'Select User') {
+      this.carWashService.getUserDetails(this.selectedEmailId).subscribe((data:Customer) => {
         this.userModel = data;
+        this.getCars();
         this.modalService.open(content).result.then((result) => {
           this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         });
     });
+    } else {
+      this.userModel = new Customer();
+      this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
   }
 
   getDismissReason(reason: any): string {
@@ -64,23 +95,32 @@ export class ProfiledetailsComponent implements OnInit {
     if (!this.validateModel()) {
       return;
     } else {
-    this.carWashService.updateUserDetails(this.userModel).subscribe((data:boolean)=>{
-        console.log("update user details "+data);
-        if(data){
-          this.successMsg ='Successfully updated';
-        }
-      });
+      if(this.userModel.id == undefined) {
+          this.userModel.userType = this.selectedUserType;
+          this.carWashService.saveUserDetails(this.userModel).subscribe((data:Customer)=>{
+            console.log("Saved user details "+data);
+            if (data) {
+              this.successMsg ='Successfully Added';
+              this.userModel = data;
+              this.updateUserListService.addUserEmailId(this.userModel.emailId);
+            }
+          });
+      } else {
+        this.carWashService.updateUserDetails(this.userModel).subscribe((data:boolean)=>{
+          console.log("update user details "+data);
+          if(data){
+            this.successMsg ='Successfully updated';
+          }
+        });
+      }
     }
   }
 
-  getCarDetails() {
+  getCars() {
     console.log("In getcardetails");
     this.carWashService.getCars(this.userModel.id).subscribe((data:Car[]) => {
       this.cars = data;
       console.log("update user details "+data);
-        if(data){
-          this.successMsg ='Successfully updated';
-        }
     });
   }
 
@@ -110,7 +150,10 @@ export class ProfiledetailsComponent implements OnInit {
   editCarDetails(id:Number) {
     console.log("Car Id :: "+id);
     this.selectedCarId = id;
-    document.getElementsByClassName('carDetails')[0];
+    this.active = 3;
   }
 
+  clickCarDetails() {
+    this.selectedCarId = undefined;
+  }
 }
