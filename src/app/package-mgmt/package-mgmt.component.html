@@ -100,8 +100,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="serviceName">Add-Ons</label>
-                                <select class="selectpicker" class="form-control" multiple data-actions-box="true" [(ngModel)]="selectedPackageDetails.addOnId">
-                                    <option *ngFor="let addons of addOnMgntList" value="addons.id">{{addons.name}} - {{addons.cost}}</option>
+                                <select class="selectpicker" class="form-control" multiple data-actions-box="true" [(ngModel)]="selectedPackageDetails.addOnId" (change)="addonChange()">
+                                    <option *ngFor="let addons of addOnMgntList" value={{addons.id}}>{{addons.name}} - {{addons.cost}}</option>
                                   </select>
                             </div>
                             <div class="row">
@@ -114,7 +114,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="Discount">Discount</label>
-                                        <input type="number" id="discount" name="discount" class="form-control" [(ngModel)]="selectedPackageDetails.discount">
+                                        <input type="number" id="discount" name="discount" class="form-control" [(ngModel)]="selectedPackageDetails.discount" (keypress)="calculateDiscount()">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -125,8 +125,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="border-top: 0px">
-                                <button class="btn btn-success">New Package</button>
-                                <button class="btn btn-success">Save</button>
+                                <button class="btn btn-success" (click)="newPackage()">New Package</button>
+                                <button class="btn btn-success" (click)="savePackageDetails()">Save</button>
                             </div>
                           </ng-template>
                         </li>

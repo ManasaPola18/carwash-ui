@@ -29,6 +29,8 @@ export class CarwashservicesService {
   savePackageDetailsUrl:string = "http://localhost:8080/carwash/savepackagedetails";
   updatePackageDetailsUrl:string = "http://localhost:8080/carwash/updatepackagedetails";
   packageDetailsUrl:string = "http://localhost:8080/carwash/packagedetails";
+  getWashCostsByIdsUrl:string = "http://localhost:8080/carwash/getWashCostsByIds";
+
 
   jsonHttpOptions = {
     headers: new HttpHeaders({
@@ -133,4 +135,9 @@ export class CarwashservicesService {
   getPackageDetails(packageName:string) : Observable<PackageDetails[]> {
     return this.http.get<PackageDetails[]>(this.packageDetailsUrl+"?packageName="+packageName, this.jsonHttpOptions);
   }
+  
+  getWashCostsByIds(ids:string) :Observable<ServiceMgnt[]> {
+    return this.http.get<ServiceMgnt[]>(this.getWashCostsByIdsUrl+"?id="+ids, this.jsonHttpOptions);
+  }
+  
 }

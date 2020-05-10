@@ -2,13 +2,13 @@ import { ServiceMgnt } from './service-mgnt';
 
 export class PackageDetails {
 
-    id:Number;
+    id:number;
     serviceId:string;
     packageName:String;
-    addOnId:String;
-    totalCost:Number;
-    discount:Number;
-    discountCost:Number;
+    addOnId:string;
+    totalCost:number;
+    discount:number = 0;
+    discountCost:number;
     status:String;
 
 }

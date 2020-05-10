@@ -21,7 +21,8 @@ export class PackageMgmtComponent implements OnInit {
 
   serviceMgntList : ServiceMgnt[];
   addOnMgntList: ServiceMgnt[];
-  serviceCost: Number;
+  serviceCost: number = 0;
+  addonCost:number = 0;
 
   constructor(private carWashService : CarwashservicesService, private modalService: NgbModal) { 
     
@@ -79,6 +80,7 @@ export class PackageMgmtComponent implements OnInit {
   open(content) {
     this.getServiceMgntList('Services');
     this.getServiceMgntList('Add-ons');
+    this.newPackage();
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -111,10 +113,51 @@ export class PackageMgmtComponent implements OnInit {
   }
 
   displayServiceCost() {
-    console.log(this.selectedPackageDetails.serviceId+".........serrviceId")
-    const filtered:ServiceMgnt[] = this.serviceMgntList.filter(s => (s.id == this.selectedPackageDetails.serviceId))
+    const filtered:ServiceMgnt[] = this.serviceMgntList.filter(s => (s.id == this.selectedPackageDetails.serviceId));
     this.serviceCost = filtered[0].cost;
+    this.selectedPackageDetails.totalCost = this.addonCost + this.serviceCost;
+    this.calculateDiscount();
   }
 
+  addonChange() {
+    console.log("this.selectedPackageDetails.addOnId...."+this.selectedPackageDetails.addOnId);
+    let cost = 0;
+    this.carWashService.getWashCostsByIds(this.selectedPackageDetails.addOnId).subscribe((data:ServiceMgnt[])=> {
+      let list:ServiceMgnt[] = data;
+      console.log(list);
+      for(let i=0; i < list.length; i++) {
+        cost = cost + list[i].cost;
+      }
+      this.addonCost = cost;
+      this.selectedPackageDetails.totalCost = this.addonCost + this.serviceCost;
+      this.calculateDiscount();
+    });
+  }
+
+  calculateDiscount() {
+    this.selectedPackageDetails.discountCost = this.selectedPackageDetails.totalCost*(1-(this.selectedPackageDetails.discount/100));
+  }
+
+  newPackage() {
+    this.selectedPackageDetails = new PackageDetails();
+    this.serviceCost = 0;
+    this.addonCost = 0;
+  } 
+  
+  savePackageDetails() {
+    if (this.selectedPackageDetails.id != undefined) {
+      this.carWashService.updatePackageDetails(this.selectedPackageDetails).subscribe((data : PackageDetails) => {
+        let index = this.packLists.findIndex(pack => pack.id == this.selectedPackageDetails.id);
+        this.packLists[index] = data;
+        this.successMsg = "Updated Successfully!"
+      }); 
+    } else {
+      this.carWashService.savePackageDetails(this.selectedPackageDetails).subscribe((data : PackageDetails) => {
+        this.packLists.push(data);
+        this.successMsg = "Saved Successfully!"
+      });
+    }
+   
+  }
 }
 
