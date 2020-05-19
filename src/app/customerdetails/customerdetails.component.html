@@ -1,61 +1,33 @@
-<div class="row" style="padding: 20px;">
-    <div class= "col-sm-4">
-        <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
-            <div class="card-header">Wash Request</div>
-            <div class="card-body">
-               
-                    <div class="form-group">
-                      <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd"
-                               name="dp" [(ngModel)]="washRequestDate" ngbDatepicker #d="ngbDatepicker">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class= "form-group">
-                        <textarea rows=4 cols="30" name="address" placeholder="Enter Location" [(ngModel)]="washRequestLocation"></textarea>
-                      </div>
-                      <div class="row">
-                          <div class= "col-sm-8"></div>
-                        <div class= "col-sm-4">
-                            <button class="btn btn-success" (click)='washRequestGo();'>Go</button>
-                        </div>
-                      </div> 
+<div style="padding: 20px 40px 0px 40px"> 
+  <div class="row" >
+      <div class= "col-sm-4">
+        <app-washrequest></app-washrequest>
+      </div>
+      
+      <div class= "col-sm-4">
+          <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+              <div class="card-header">My Orders</div>
+              <div class="card-body">
+                <h4 class="card-title">Info card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
             </div>
-          </div>
-    </div>
+      </div>
 
-    <div class= "col-sm-4">
-        <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
-            <div class="card-header">My Orders</div>
-            <div class="card-body">
-              <h4 class="card-title">Info card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <div class= "col-sm-4">
+              <app-customerprofiledetails></app-customerprofiledetails>
+      </div>
+  </div>
+  <div class="row"> 
+      <div class= "col-sm-4">
+          <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+              <div class="card-header">Add Car</div>
+              <div class="card-body">
+                <h4 class="card-title">Info card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
             </div>
-          </div>
-    </div>
+      </div>
 
-    <div class= "col-sm-4">
-        <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
-            <div class="card-header">Profile</div>
-            <div class="card-body">
-              <h4 class="card-title">Info card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-    </div>
-</div>
-<div class="row">
-    <div class= "col-sm-4">
-        <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
-            <div class="card-header">Add Car</div>
-            <div class="card-body">
-              <h4 class="card-title">Info card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-    </div>
-
+  </div>
 </div>

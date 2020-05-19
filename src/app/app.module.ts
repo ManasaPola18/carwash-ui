@@ -11,7 +11,7 @@ import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CarwashservicesService } from './carwashservices.service';
-import { CustomerdetailsComponent } from './customerdetails/customerdetails.component';
+import { customerdetailsComponent } from './customerdetails/customerdetails.component';
 import { WasherdetailsComponent } from './washerdetails/washerdetails.component';
 import { WashrequestComponent } from './washrequest/washrequest.component';
 import { AdminComponent } from './admin/admin.component';
@@ -24,6 +24,7 @@ import { PromoMgmtComponent } from './promo-mgmt/promo-mgmt.component';
 import { ReportMgmtComponent } from './report-mgmt/report-mgmt.component';
 import { LoginService } from './customer-login/login-service';
 import { AuthGuard, httpInterceptorProviders } from './auth-guard';
+import { CustomerprofiledetailsComponent } from './customerprofiledetails/customerprofiledetails.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { AuthGuard, httpInterceptorProviders } from './auth-guard';
     PaymentDetailsComponent,
     SignupcomponentComponent,
     IntroductionComponent,
-    CustomerdetailsComponent,
+    customerdetailsComponent,
     WasherdetailsComponent,
     WashrequestComponent,
     AdminComponent,
@@ -42,7 +43,8 @@ import { AuthGuard, httpInterceptorProviders } from './auth-guard';
     CarComponent,
     PackageMgmtComponent,
     PromoMgmtComponent,
-    ReportMgmtComponent
+    ReportMgmtComponent,
+    CustomerprofiledetailsComponent
   ],
   imports: [
     BrowserModule,

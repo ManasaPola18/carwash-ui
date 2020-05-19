@@ -4,7 +4,7 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
 import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { SignupcomponentComponent } from './signupcomponent/signupcomponent.component';
 import { IntroductionComponent } from './introduction/introduction.component';
-import { CustomerdetailsComponent } from './customerdetails/customerdetails.component';
+import { customerdetailsComponent } from './customerdetails/customerdetails.component';
 import { WasherdetailsComponent } from './washerdetails/washerdetails.component';
 import { WashrequestComponent } from './washrequest/washrequest.component';
 import { AdminComponent } from './admin/admin.component';
@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'customerlogin/:userType', component: CustomerLoginComponent},
   { path: 'customerSignup', component: SignupcomponentComponent},
   { path: 'paymenthistory', component: PaymentDetailsComponent, canActivate: [AuthService]},
-  { path: 'customerdetails', component: CustomerdetailsComponent , canActivate: [AuthService]},
+  { path: 'customerdetails', component: customerdetailsComponent , canActivate: [AuthService]},
   { path: 'washdetails', component: WasherdetailsComponent, canActivate: [AuthService]},
   { path: 'washrequest', component: WashrequestComponent, canActivate: [AuthService]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthService]},

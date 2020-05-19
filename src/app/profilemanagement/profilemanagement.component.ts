@@ -20,7 +20,6 @@ export class ProfilemanagementComponent implements OnInit {
     private router: Router, private ref: ChangeDetectorRef,
     private updateUserListService : UpdateUserListService) {
       this.updateUserListService.newCustomer.subscribe((data:string)=>{
-        console.log("dataa ............." + data);
         this.emailIds.push(data);
       });
      }

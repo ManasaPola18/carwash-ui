@@ -7,6 +7,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Car } from './car/car';
 import { ServiceMgnt } from './package-mgmt/service-mgnt';
 import { PackageDetails } from './package-mgmt/package-details';
+import { Promomgmt } from './promo-mgmt/promomgmt';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,10 @@ export class CarwashservicesService {
   updatePackageDetailsUrl:string = "http://localhost:8080/carwash/updatepackagedetails";
   packageDetailsUrl:string = "http://localhost:8080/carwash/packagedetails";
   getWashCostsByIdsUrl:string = "http://localhost:8080/carwash/getWashCostsByIds";
-
+  getPackageDetailsByIdUrl:string = "http://localhost:8080/carwash/packagedetailsbyid";
+  savePromoCodeDetailsUrl:string = "http://localhost:8080/carwash/savePromocodes"
+  updatePromoCodeUrl:string = "http://localhost:8080/carwash/updatepromodetails"
+  getPromocodesByNameUrl:string = "http://localhost:8080/carwash/getPromocodesByName"
 
   jsonHttpOptions = {
     headers: new HttpHeaders({
@@ -140,4 +144,24 @@ export class CarwashservicesService {
     return this.http.get<ServiceMgnt[]>(this.getWashCostsByIdsUrl+"?id="+ids, this.jsonHttpOptions);
   }
   
+  getPackageDetailsById(id:number) : Observable<PackageDetails> {
+    return this.http.get<PackageDetails>(this.getPackageDetailsByIdUrl+"?id="+id, this.jsonHttpOptions);
+  }
+
+  savePromoCode(promodetails:Promomgmt) : Observable<Promomgmt> {
+    return this.http.post<Promomgmt>(this.savePromoCodeDetailsUrl,promodetails,this.jsonHttpOptions ).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updatePromoCode(promodetails:Promomgmt) : Observable<boolean> {
+    return this.http.post<boolean>(this.updatePromoCodeUrl,promodetails,this.jsonHttpOptions ).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getPromocodesByName(id:number) : Observable<Promomgmt> {
+    return this.http.get<Promomgmt>(this.getPromocodesByNameUrl+"?id="+id, this.jsonHttpOptions);
+  }
+
 }

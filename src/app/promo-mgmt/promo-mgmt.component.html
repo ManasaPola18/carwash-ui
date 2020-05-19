@@ -1,7 +1,93 @@
 <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
     <div class="card-header">Promo Management</div>
         <div class="card-body">
-            <button class="btn btn-success" >View</button>&nbsp;
-            <button class="btn btn-success" >Create New</button>
+            <ng-template #content let-modal>
+                <div class="modal-header" style="padding: 8px; border: hidden;">
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="padding: 0px 10px;">
+                        <li [ngbNavItem]="1" style="overflow: auto;">
+                          <a ngbNavLink>Promocode Details</a>
+                          <ng-template ngbNavContent>
+                            <div style="padding-top: 10px;">
+                            <span style="color:green">{{successMsg}}</span>
+                            <span style="color:red">{{errorMsg}}</span>
+                                <div class="row">
+                                    <label for="Promocode Name">Promocode Name</label>
+                                    <input type="text" id="promoName" name="promoName" class="form-control" [(ngModel)]= "selectedPromo.promoName">
+                                </div>
+                                <div class="row">
+                                    <label for="Discount percentage">Discount %</label>
+                                    <input type="number" id="discountPercentage" name="discountPercentage" class="form-control"  [(ngModel)]= "selectedPromo.discountPercentage">
+                                </div>
+                                <div class="row">
+                                    <label for="Minimum amount">Minimum amount</label>
+                                    <input type="number" id="minimumAmount" name="minimumAmount" class="form-control" [(ngModel)]= "selectedPromo.minimumAmount">
+                                </div>
+                                <div class="row">
+                                    <label for="Maximum amount">Minimum amount</label>
+                                    <input type="number" id="maximumAmount" name="maximumAmount" class="form-control" [(ngModel)]= "selectedPromo.maximumAmount">
+                                </div>
+                                <div class="row">
+                                    <label for="Status">Status</label>
+                                    <select id="status" name="status" class="form-control" [(ngModel)]= "selectedPromo.status">
+                                        <option value="Active">Active</option>
+                                        <option value="InActive">In Active</option>
+                                    </select>
+                                </div>
+                                <div class="modal-footer" style="border-top: 0px">
+                                    <!--<button class="btn btn-success" (click)="newPromoCode()">New Promocode</button>-->
+                                    <button class="btn btn-success" (click)="savePromo()">Save</button>
+                                </div>
+                            </div>
+                          </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2">
+                          <a ngbNavLink>Promocodes</a>
+                          <ng-template ngbNavContent>
+                            <table class="table table-striped table-hover">
+                              <thead>
+                              <tr>
+                                <th scope="col" style="border-top: 0px">#</th>
+                                <th scope="col" style="border-top: 0px">Promocode</th>
+                                <th scope="col" style="border-top: 0px">Discount%</th>
+                                <th scope="col" style="border-top: 0px">Min. cost</th>
+                                <th scope="col" style="border-top: 0px">Max. cost</th>
+                                <th scope="col" style="border-top: 0px">Status</th>
+                              </tr>
+                              </thead>
+                              <!--<tbody>
+                              <tr *ngFor="let  of promos as promoCodes; let i = index" [attr.data-index]="i" style="cursor: pointer;" (click) ="editPromo(promos.id)" >
+                                <th scope="row">{{ i + 1 }}</th>
+                                <td>{{ promos.promoName }}</td>
+                                <td>{{ promos.discountPercentage }}</td>
+                                <td>{{ promos.minimumAmount }}</td>
+                                <td>{{ promos.maximumAmount }}</td>
+                                <td>{{ promos.status }}</td>
+                              </tr>
+                              </tbody>-->
+                            </table>
+                          </ng-template>
+                        </li>
+                      </ul>
+                      
+                      <div [ngbNavOutlet]="nav" class="mt-2" style="padding: 0px 10px;"></div>
+                      
+                </div>
+              </ng-template>
+              
+              <button class="btn btn-success" (click)="open(content)">Create New</button>
         </div>
-</div> 
+</div>
+
+
+
+
+
+
+
+
+  

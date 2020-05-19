@@ -1,11 +1,19 @@
 <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
     <div class="card-header">Order Management</div>
         <div class="card-body"> 
-            <select id="orderType" name="orderType" class="form-control" [(ngModel)]="orderType">
-                <option value="">Select Order Type</option>
-                <option value="New Order">New Order</option>
-                <option value="Existing Order">Existing Order</option>
-            </select>
+            <div class="form-group">
+                <select  id="orderType" name="orderType" class="form-control">
+                    <option value="" disabled selected>Select Order Type</option>
+                    <option value="New Order">New Order</option>
+                    <option value="Existing Order">Existing Order</option>
+                </select>
+                <!--<select [style.visibility]="emailIds.length > 0 ? 'visible' : 'hidden'" name="selectedEmailId"  class="form-control" 
+                    [(ngModel)]="selectedEmailId">
+                    <option *ngFor="let mail of emailIds" 
+                    [attr.selected]="mail == 'Select User' ? true : null">
+                 {{mail}}</option>
+                </select>-->
+            </div> 
 
             
 
@@ -18,3 +26,19 @@
             </select>
         </div>
 </div>
+<!------------------------------------Modal------------------------------------------------------------->
+<!--<ng-template #content let-modal>
+    <div class="modal-header" style="padding: 8px; border: hidden;">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true" >&times;</span>
+      </button>
+    </div>
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" style="padding: 0px 10px;">
+        <li [ngbNavItem]="1" >
+          <a ngbNavLink>Orders</a>
+          <ng-template ngbNavContent>
+           
+
+                  
+        </li>
+</ng-template>-->

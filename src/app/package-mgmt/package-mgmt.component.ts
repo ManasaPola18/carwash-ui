@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit, OnChanges, SimpleChanges, ɵSWITCH_CHANGE_DETECTOR_REF_FACTORY__POST_R3__, DoCheck } from '@angular/core';
 import { ServiceMgnt } from './service-mgnt';
 import { CarwashservicesService } from '../carwashservices.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
@@ -8,27 +8,40 @@ import { PackageDetails } from './package-details';
   selector: 'app-package-mgmt',
   templateUrl: './package-mgmt.component.html',
   styleUrls: ['./package-mgmt.component.css']
+
 })
-export class PackageMgmtComponent implements OnInit {
+export class PackageMgmtComponent implements OnInit, DoCheck {
 
   active = 1;
   successMsg:string;
   selectedService:ServiceMgnt = new ServiceMgnt();
   mgmtType:string = 'Select Options';
 
-  packLists:PackageDetails[];
+  packLists:PackageDetails[] = [];
   selectedPackageDetails:PackageDetails = new PackageDetails();
 
   serviceMgntList : ServiceMgnt[];
   addOnMgntList: ServiceMgnt[];
   serviceCost: number = 0;
   addonCost:number = 0;
+  errorMsg:String;
 
-  constructor(private carWashService : CarwashservicesService, private modalService: NgbModal) { 
+  idSelectedFromListPage:number = 0;
+
+  constructor(private carWashService : CarwashservicesService, private modalService: NgbModal, 
+    private changeDetectorRef : ChangeDetectorRef) { 
     
   }
 
   ngOnInit(): void {
+  }
+
+  ngDoCheck():void {
+    console.log("In ngOnChanges .................."+(this.idSelectedFromListPage != this.selectedPackageDetails.id));
+    if (this.idSelectedFromListPage != 0 && this.idSelectedFromListPage != this.selectedPackageDetails.id) {
+      this.editPackDetails(this.idSelectedFromListPage);
+    }
+    console.log("In ngOnChanges ..................");
   }
 
   mgmtTypeOnChange(type : string):void {
@@ -78,6 +91,7 @@ export class PackageMgmtComponent implements OnInit {
   closeResult = '';
 
   open(content) {
+    this.listOfPackages();
     this.getServiceMgntList('Services');
     this.getServiceMgntList('Add-ons');
     this.newPackage();
@@ -108,8 +122,15 @@ export class PackageMgmtComponent implements OnInit {
       });
   } 
 
-  editPackDetails(id:Number) {
-
+  editPackDetails(id:number) {
+    this.idSelectedFromListPage = id;
+    console.log("in edit pack details ..... "+id);
+    this.carWashService.getPackageDetailsById(id).subscribe((data : PackageDetails) => {
+        this.selectedPackageDetails = data;
+        console.log(this.selectedPackageDetails);
+        this.active = 2;
+        this.changeDetectorRef.markForCheck();
+    });
   }
 
   displayServiceCost() {
@@ -145,6 +166,10 @@ export class PackageMgmtComponent implements OnInit {
   } 
   
   savePackageDetails() {
+    console.log("Addon id s ..." +this.selectedPackageDetails.addOnId);
+    if (!this.validateModel()) {
+      return;
+    }
     if (this.selectedPackageDetails.id != undefined) {
       this.carWashService.updatePackageDetails(this.selectedPackageDetails).subscribe((data : PackageDetails) => {
         let index = this.packLists.findIndex(pack => pack.id == this.selectedPackageDetails.id);
@@ -157,7 +182,23 @@ export class PackageMgmtComponent implements OnInit {
         this.successMsg = "Saved Successfully!"
       });
     }
-   
+    
   }
+
+  validateModel():boolean {
+    this.errorMsg = '';
+    if (this.selectedPackageDetails.packageName == undefined || this.selectedPackageDetails.packageName=='') {
+      this.errorMsg ="Enter package name";
+      return false;
+    }
+    return true;
+  };
+
+ listOfPackages() : void{
+    this.carWashService.getPackageDetails('').subscribe((data: PackageDetails[]) => {
+  this.packLists = data;
+    });
+  }
+  
 }
 

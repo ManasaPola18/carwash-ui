@@ -68,7 +68,7 @@ export class SignupcomponentComponent implements OnInit {
       return false;
     }
     if (this.model.emailId == undefined || !email.test(this.model.emailId)) {
-      this.errorMsg ="Enter valid email address";
+      this.errorMsg ="Enter valid and unique email address";
       return false;
     }
     return true;

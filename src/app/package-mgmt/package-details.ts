@@ -9,6 +9,7 @@ export class PackageDetails {
     totalCost:number;
     discount:number = 0;
     discountCost:number;
-    status:String;
+    status:String="Active";
+    serviceName:string;
 
 }
